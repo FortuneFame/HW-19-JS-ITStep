@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <title>Home Work Yarosalva</title>
+</head>
+
+<body>
+    <!-- ------------------------ Task 1 ---------------------------- -->
+
+    <div class="task1" id="box">
+        <h1 class="taskTitle">Задание №1</h1>
+        <div class="flex">
+            <div id="div1" class="drag one"></div>
+            <div id="div2" class="drag two"></div>
+            <div id="div3" class="drag three"></div>
+        </div>
+    </div>
+
+    <!-- ------------------------ Task 2 ---------------------------- -->
+
+    <div class="task2">
+        <h1 class="taskTitle">Задание №2 и №3</h1>
+        <div class="flex">
+            <table id="myTable">
+                <tr>
+                    <th>№</th>
+                    <th>Название товара</th>
+                    <th>Количество</th>
+                    <th>Цена за единицу</th>
+                    <th>Общая стоимость</th>
+                </tr>
+                <tr draggable="true">
+                    <td>1</td>
+                    <td>Яблоки</td>
+                    <td>10</td>
+                    <td>50</td>
+                    <td>500</td>
+                </tr>
+                <tr draggable="true">
+                    <td>2</td>
+                    <td>Молоко</td>
+                    <td>2</td>
+                    <td>60</td>
+                    <td>120</td>
+                </tr>
+                <tr draggable="true">
+                    <td>3</td>
+                    <td>Хлеб</td>
+                    <td>1</td>
+                    <td>40</td>
+                    <td>40</td>
+                </tr>
+                <tr draggable="true">
+                    <td>4</td>
+                    <td>Мясо</td>
+                    <td>3</td>
+                    <td>300</td>
+                    <td>900</td>
+                </tr>
+            </table>
+        </div>
+        <p class="text">При двойном клике будет копироваться вся строка таблицы</p>
+        <textarea rows="10"></textarea>
+    </div>
+
+    <!-- ------------------------ Bonus ---------------------------- -->
+
+    <div class="bonus">
+        <h1 class="bonusTitle">Бонус</h1>
+        <h1>Укажите количество</h1>
+        <div class="content">
+            <input value="0" type="text" id="numberInput" readonly="readonly" />
+            <div class="btn">
+                <button onclick="incrementNumber()" class="arrow-button">&#9650;</button>
+                <button onclick="decrementNumber()" class="arrow-button">&#9660;</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+
+</html>

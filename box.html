@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <title>Task #1</title>
+    <style>
+        body {
+            position: relative;
+        }
+
+        .item,
+        .phantom {
+            display: block;
+            margin: auto;
+            height: 40px;
+            width: 400px;
+        }
+
+        .phantom {
+            position: absolute;
+        }
+
+        ol {
+            list-style: none;
+            color: black;
+        }
+
+        .item {
+            position: relative;
+        }
+
+        .number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <ol id="list">
+        <li class="item" style="background-color:gold" data-value="1">
+            <span class="number">1.</span>
+        </li>
+        <li class="item" style="background-color:red" data-value="2">
+            <span class="number">2.</span>
+        </li>
+        <li class="item" style="background-color:green" data-value="3">
+            <span class="number">3.</span>
+        </li>
+        <li class="item" style="background-color:blue" data-value="4">
+            <span class="number">4.</span>
+        </li>
+    </ol>
+    <script>
+        let draggedElement = false;
+        let phantomElement = false;
+
+        document.onmousedown = function (e) {
+            e.preventDefault();
+            const clickedElement = document.elementFromPoint(e.clientX, e.clientY);
+            if (clickedElement.className.indexOf('item') > -1) {
+                clickedElement.style.opacity = '0.5';
+                draggedElement = clickedElement;
+            };
+        };
+
+        document.onmouseup = function (e) {
+            if (draggedElement) {
+                draggedElement.style.opacity = '1';
+                draggedElement = false;
+            }
+            if (phantomElement) {
+                document.body.removeChild(phantomElement);
+                phantomElement = false;
+            };
+            updateList();
+        };
+
+        document.onmousemove = function (e) {
+            if (draggedElement) {
+                if (!phantomElement) {
+                    phantomElement = document.createElement('div');
+                    phantomElement.style.backgroundColor = draggedElement.style.backgroundColor;
+                    phantomElement.style.left = e.pageX - draggedElement.offsetWidth / 2 + 'px';
+                    phantomElement.style.top = e.pageY - draggedElement.offsetHeight / 2 + 'px';
+                    phantomElement.className = "phantom";
+                    document.body.appendChild(phantomElement);
+                }
+                else {
+                    phantomElement.style.left = e.pageX - phantomElement.offsetWidth / 2 + 'px';
+                    phantomElement.style.top = e.pageY - phantomElement.offsetHeight / 2 + 'px';
+                    phantomElement.style.zIndex = '-1';
+
+                    const lowerElement = document.elementFromPoint(e.clientX, e.clientY);
+                    phantomElement.style.zIndex = '1';
+
+                    if (lowerElement != null && lowerElement != draggedElement) {
+                        if (lowerElement.className.indexOf('item') > -1) {
+                            let items = document.querySelectorAll('.item');
+                            let lowerElementIndex = Array.prototype.indexOf.call(items, lowerElement);
+                            let draggedElementIndex = Array.prototype.indexOf.call(items, draggedElement);
+
+                            if (draggedElementIndex < lowerElementIndex) {
+                                lowerElement.parentNode.insertBefore(draggedElement, lowerElement.nextSibling);
+                            }
+                            else {
+                                lowerElement.parentNode.insertBefore(draggedElement, lowerElement);
+                            };
+                        };
+                    };
+                };
+            };
+        };
+
+        function updateList() {
+            const items = document.querySelectorAll('.item');
+            const list = document.getElementById('list');
+            for (var i = 0; i < items.length; i++) {
+                let item = items[i];
+                let color = item.style.backgroundColor;
+                let value = colorToValue(color);
+                item.innerHTML = value;
+                list.appendChild(item);
+            };
+        };
+
+        function colorToValue(color) {
+            switch (color) {
+                case 'gold':
+                    return '1.';
+                case 'red':
+                    return '2.';
+                case 'green':
+                    return '3.';
+                case 'blue':
+                    return '4.';
+                default:
+                    return '';
+            };
+        };
+    </script>
+</body>
+</html>
